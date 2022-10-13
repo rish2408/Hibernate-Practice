@@ -1,0 +1,179 @@
+===========================================================Build tool : Maven=======================================================
+
+Build Process in java based project/application management:
+-----------------------------------------------------------
+
+Develpers duty/responsibility to develop a java based business application:
+
+1. Write some source code(bunch of classes, inteface...) 
+
+2. Add some external  jarfiles to the classpath (dependencies of our application) in JDBC dao project, driver jar file is the dependency of our project.
+
+3. Compile the code.
+
+4. Prepare some test cases. (Unit test, Junit, Mockito, Sonar ) 
+
+5. Add Junit/mockito related jar files inside the classpath
+
+6. Compile  and run the test cases.
+
+7. Arrange our code in a standard folder structure
+
+Java based Webapplication Contains :
+------------------------------------
+
+*.java
+*.class
+*.jar
+*.html
+*.css
+*.js
+*.xml files
+*.mp3, mp4, jpg, gif 
+
+8. Do the packaging : build the jar, war file. 
+
+9. Deploy this jar file/ war file to the server.
+
+Note : If any mistake identified then developer performs above task again and again.
+
+=======================================Build process============================================
+
+Keeping our project ready for execution/release is called build process. Manually doing this build process will increase the burden on developer
+
+To automate this build process of java applicaiton , apache foundation released a tool called ANT (Another Neet Tool).
+
+The problem with ANT tool is :
+------------------------------
+
+1. ANT does not have the capabilities of donwloading the required jar files from internate automatically.
+
+2. It can not prepare,compile and run the test cases automatically.
+
+3.In ANT we need to write a build.xml file which is very lengthy xml file.
+
+As a solution Apache foundation released another build tool called Maven, Gradle.
+
+We can develop java application using Maven by 2 ways:
+------------------------------------------------------
+
+1. Using console based (here we need to download the maven s/w and install it in our local computer, and then we need to set path and 
+some environment variable to develop java application).
+
+>mvn 
+
+Note : After that using some command in command prompt we can generate the template of our java application without any IDE.
+
+2. Using IDE : Here we don't need to install any kind of extra software. STS has inbuilt support of Maven and Gradle.
+
+Maven terminology:
+==================
+
+1. artifact :- An artifact is an outcome in maven, it can be a file, .class file or a jar file, war file,ear file,etc.
+
+2. archetype:- It is project template for creating similar type of project in maven.
+
+3. Groupid:- com.wipro : It is an Id used to identify the artifacts of a perticular organization (naming convention is similar to package name.) com.masai
+
+4. artifactid : It is the id for the final outcome (artifactid name will be the root folder of our application)
+
+5. pom.xml : (project object model) : all the information will be their in this file. In this model, entire application itself will be considered as an object.
+
+It defines following properties for a project:
+----------------------------------------------
+
+1. Name
+
+2. Version
+
+3. Packaging (jar, war, ear)
+
+4. Dependecnies : required jar files.
+
+5. Plugins: will inhance the functionality of our project. Such as -> docker, jenkins (CI/CD).
+
+Maven Repository:
+================
+
+A repository is a store where maven maintains plugins, archetypes, and lots of jar files used for building different kinds of java projects.
+
+Maven repository are of 3 types:
+--------------------------------
+
+1. Central repository :- It is the maven's own repo in which it maintains all kinds of project related plugins, archetypes, jars etc. 
+				 https://repo1.maven.org/maven2
+
+2. Remote repository : This repo is maintained within the organization for sharing plugins, archetypes and jar files for multiple projects withing orgnizations. ex: masairepo
+
+3. Local repository : This repo will be created inside the developer computer.  (.m2) is the name for this repository.
+ 
+mysql-connector.jar :
+
+pom.xml:
+
+package.json
+
+.m2
+
+maven build life cycle:
+=======================
+
+maven build life cycle contains diff phases:
+
+
+1. validate: - in this phase it will verify the project diectory structure is valid or not. and it has pom.xml file is there or not.
+
+2. compile: maven compiles all the source code of the project by downloading and adding requied jar files in the classpath.
+
+3. test-compile: if we have written any unit test cases those code will be compiled.
+
+4. test : maven will run all the test cases and it will show how many test cases are success and how many fails.
+
+5. package : maven will bundle our java code into a jar file inside 'target' folder.
+
+6. install : that jar file in step 5 will be stored in the localrepo.
+
+7. deploy : maven stores the application jar file to the central repo.
+
+**8. clean : here maven will delete and remove all the files that are generated in previous build. this phase is an isolated phase.
+
+Note : If we execute any phase to build the maven project then maven will execute all the phases till that given phase.except phase 8.clean.
+
+>mvn clean :- remove and delete previous build
+>mvn test : till the test phase.
+>mvn deploy : 
+>mvn validate :
+
+Project Structure
+------------------
+
+pom.xml is similar to package.json file.
+
+src/main/java : here we need to place our source code
+
+src/main/resources : any xml file, properties files, text files
+
+src/test/java : here we need to place our source code to unit testing
+
+src/test/resources : any xml file, properties files, text files to unit testing
+
+After creating a maven project we need to change the java  version of the maven project from jdk 5 to jdk 8
+
+search in google: "maven compiler source"
+
+ <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+After pasting the above tag inside the pom.xml file we need to update our maven project:
+
+right click on the project ---> maven ---> update maven project.(select force update)
+
+To build our maven application : ---> right click on the project ----> Run as ---> Maven build... -----> inside Goal type : clean package ----> run 
+
+1. create the maven by skipping architype selection
+
+2. change the java version from 1.5 to 1.8
+
+3. Take a <dependencies> tag and inside this tag paste any depedency jar file if it is required.
